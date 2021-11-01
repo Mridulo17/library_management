@@ -58,7 +58,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'book_name'   => 'required|unique:books',
+            // 'book_name'   => 'required|unique:books',
             'author_name' => 'required',
             'price'       => 'required',
         ],

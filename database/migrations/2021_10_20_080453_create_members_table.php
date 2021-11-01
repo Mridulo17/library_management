@@ -14,15 +14,15 @@ class CreateMembersTable extends Migration
     public function up()
     {
         Schema::create('members', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
             $table->string('phone');
             $table->string('email');
             $table->integer('created_by')->unsigned()->nullable();
             $table->timestamps();
-            $table->softDeletes();
+            // $table->softDeletes();
 
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

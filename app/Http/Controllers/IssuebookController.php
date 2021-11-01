@@ -33,10 +33,11 @@ class IssuebookController extends Controller
                             return $btn;
                     })
                     ->addColumn('member', function (IssueBook $issueBook) {
-                        return $issueBook->member->name;
+                        return $issueBook->member->name ?? 'null';
                     })
                     ->addColumn('book', function (IssueBook $issueBook) {
-                        return $issueBook->book->book_name;
+                        return $issueBook->book->book_name ?? 'null';
+
                     })
                     ->addColumn('createdBy', function (IssueBook $issueBook) {
                         return $issueBook->createdBy->name;
@@ -94,9 +95,9 @@ class IssuebookController extends Controller
         $validator = Validator::make($request->all(), [
             'member_id'      => 'required',
             'book_id'        => 'required',
-            'issue_date'       => 'required',
-            'return_date'       => 'required',
-            'is_return'       => 'required',
+            'issue_date'     => 'required',
+            'return_date'    => 'required',
+            'is_return'      => 'required',
         ],
         [
             'member_id.required' => 'Member is Required!',
@@ -161,6 +162,9 @@ class IssuebookController extends Controller
     public function destroy($id)
     {
         IssueBook::find($id)->delete();
+
+        // $member = Member::find($id)->delete();
+        // $member->issuebooks()->where('id',1)->delete();
      
         return response()->json(['success'=>'Issuebook deleted successfully.']);
     }

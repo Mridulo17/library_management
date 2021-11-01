@@ -115,7 +115,7 @@
                         <label for="name" class="col-sm-2 control-label">Member</label>
                         <div class="col-sm-12">
                         <select class="form-control" name="member_id" id="member_id">
-                             
+                        
                         </select>
                         </div>
                     </div>
@@ -124,7 +124,6 @@
                         <label class="col-sm-2 control-label">Book</label>
                         <div class="col-sm-12">
                         <select class="form-control" name="book_id" id="book_id">
-                            
                         </select>
                         </div>
                     </div>

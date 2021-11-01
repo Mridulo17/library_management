@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\IssueBook;
 use Auth;
 use DataTables;
 use Validator;
@@ -57,16 +58,35 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email|unique:members',
-        ],
-        [
-            'email.unique' => 'This email is already taken!'
-        ]);
+        if(!$request->product_id)
+        {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'phone' => 'required',
+                'email' => 'required|email|unique:members',
+            ],
+            [
+                'email.unique' => 'This email is already taken!'
+            ]);
+        }
+        else
+        {
+            // return true;
+            // return 'shovon';
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'phone' => 'required',
+                'email' => 'required|email|unique:members,email,'.$request->product_id.',id',
+                
+            ],
+            [
+                'email.unique' => 'This email is already taken!'
+            ]); 
+        }
+        
      
         if ($validator->passes()) {
+            
             Member::updateOrCreate(
                 ['id' => $request->product_id],
                 ['name' => $request->name,
@@ -132,7 +152,13 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        Member::find($id)->delete();
+        // dd($id);
+        
+        $member = Member::find($id)->delete();
+        //dd($member);
+        if($member){
+            IssueBook::where('member_id',$id)->delete();
+        }
      
         return response()->json(['success'=>'Member deleted successfully.']);
     }

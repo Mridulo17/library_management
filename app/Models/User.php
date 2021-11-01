@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'updated_at', 'deleted_at'
+        'password', 'updated_at',
     ];
 
     /**
@@ -53,4 +53,28 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\IssueBook', 'created_by', 'id');
     }
+
+    // public function delete()
+    // {
+    //     // delete all related photos 
+    //     $this->books()->delete();
+    //     // as suggested by Dirk in comment,
+    //     // it's an uglier alternative, but faster
+    //     // Photo::where("user_id", $this->id)->delete()
+
+    //     // delete the user
+    //     return parent::delete();
+    // }
+
+
+
+    // // this is a recommended way to declare event handlers
+    // public static function boot() {
+    //     parent::boot();
+
+    //     static::deleting(function($member) { // before delete() method call this
+    //          $member->books()->delete();
+    //          // do the rest of the cleanup...
+    //     });
+    // }
 }

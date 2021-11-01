@@ -119,7 +119,7 @@
      
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Phone</label>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12"> 
                         <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone" value="" maxlength="50" required="">
                         </div>
                     </div>
